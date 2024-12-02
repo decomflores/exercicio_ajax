@@ -9,16 +9,23 @@ $(document).ready(function(){
     const endpoint = `https://api.github.com/users/ogiansouza`
 
     fetch(endpoint)
-        .then(function(res){
-            return res.json();
-        })
-        .then(function(json){
-            nameElement.innerText = json.name;
-            userElement.innerText = json.login;
-            avatarElement.src = json.avatar_url;
-            followingElement.innerText = json.following;           
-            followersElement.innerText = json.followers;
-            reposElement.innerText = json.public_repos;
-            linkElement.href = json.html_url;
-        })
+    .then(function(res) {
+        if (!res.ok) {
+            throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return res.json();
+    })
+    .then(function(json) {
+        nameElement.innerText = json.name;
+        userElement.innerText = json.login;
+        avatarElement.src = json.avatar_url;
+        followingElement.innerText = json.following;           
+        followersElement.innerText = json.followers;
+        reposElement.innerText = json.public_repos;
+        linkElement.href = json.html_url;
+    })
+    .catch(function(error) {
+        alert("Ocorreu um erro, tente novamente mais tarde.");
+        console.error(error);
+    });
 })
